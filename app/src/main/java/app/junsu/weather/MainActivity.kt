@@ -25,10 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import app.junsu.weather.ui.theme.BackgroundAfternoon
-import app.junsu.weather.ui.theme.BackgroundMidnight
-import app.junsu.weather.ui.theme.BackgroundMorning
-import app.junsu.weather.ui.theme.BackgroundSunrise
-import app.junsu.weather.ui.theme.BackgroundSunset
 import app.junsu.weather.ui.theme.WeatherBriefingTheme
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -70,9 +66,7 @@ private fun WeatherApp(
     ) {
         Spacer(modifier = Modifier.weight(0.1f))
         WeatherCard(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(80.dp),
+            modifier = Modifier.fillMaxWidth(),
         )
         Card(
             modifier = Modifier
@@ -80,7 +74,7 @@ private fun WeatherApp(
                 .fillMaxWidth()
                 .padding(8.dp),
             colors = CardDefaults.cardColors(
-                containerColor = Color.DarkGray.copy(alpha = 0.2f),
+                containerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
             ),
         ) {}
     }
@@ -95,10 +89,12 @@ private fun WeatherCard(
     )
 
     Row(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxWidth(),
     ) {
         LottieAnimation(
-            modifier = Modifier.weight(0.4f),
+            modifier = Modifier
+                .height(80.dp)
+                .weight(0.4f),
             composition = composition,
             iterations = LottieConstants.IterateForever,
             contentScale = ContentScale.Crop,
@@ -117,6 +113,13 @@ private fun WeatherCard(
                 text = "23\'",
                 style = MaterialTheme.typography.displayLarge,
             )
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
+}
+
+@Composable
+private fun FineDustCard(
+    modifier: Modifier = Modifier,
+) {
 }
