@@ -4,7 +4,7 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.koinApplication
 
-class WeatherApp : Application() {
+class WeatherApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         initKoin()
@@ -12,7 +12,7 @@ class WeatherApp : Application() {
 
     private fun initKoin() {
         koinApplication {
-            androidContext(this@WeatherApp)
+            androidContext(this@WeatherApplication)
             modules()
         }
     }
