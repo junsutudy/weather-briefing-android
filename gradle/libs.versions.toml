@@ -1,5 +1,6 @@
 [versions]
 agp = "8.2.0-alpha15"
+jsoup = "1.16.1"
 koin-android = "3.4.3"
 koin-androidx-compose = "3.4.6"
 kotlin = "1.8.10"
@@ -10,10 +11,11 @@ espresso-core = "3.5.1"
 ktor-client-android = "2.3.4"
 lifecycle-runtime-ktx = "2.6.1"
 activity-compose = "1.7.2"
-compose-bom = "2023.03.00"
+compose-bom = "2023.08.00"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
