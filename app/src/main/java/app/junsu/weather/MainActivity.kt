@@ -3,6 +3,7 @@ package app.junsu.weather
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -18,8 +20,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import app.junsu.weather.ui.theme.BackgroundAfternoon
+import app.junsu.weather.ui.theme.BackgroundMidnight
+import app.junsu.weather.ui.theme.BackgroundMorning
+import app.junsu.weather.ui.theme.BackgroundSunrise
+import app.junsu.weather.ui.theme.BackgroundSunset
 import app.junsu.weather.ui.theme.WeatherBriefingTheme
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -48,8 +57,16 @@ class MainActivity : ComponentActivity() {
 private fun WeatherApp(
     modifier: Modifier = Modifier,
 ) {
+    val colors = listOf(
+        BackgroundAfternoon.copy(alpha = 0.4f),
+        BackgroundAfternoon.copy(alpha = 0.3f),
+        Color.Transparent,
+    )
+    val brush = Brush.verticalGradient(colors)
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .background(brush = brush),
     ) {
         Spacer(modifier = Modifier.weight(0.1f))
         WeatherCard(
@@ -62,8 +79,10 @@ private fun WeatherApp(
                 .weight(0.9f)
                 .fillMaxWidth()
                 .padding(8.dp),
-        ) {
-        }
+            colors = CardDefaults.cardColors(
+                containerColor = Color.DarkGray.copy(alpha = 0.2f),
+            ),
+        ) {}
     }
 }
 
