@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,8 +12,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -24,7 +25,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import app.junsu.weather.ui.theme.BackgroundAfternoon
+import app.junsu.weather.ui.theme.BackgroundMorning
 import app.junsu.weather.ui.theme.WeatherBriefingTheme
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -54,8 +55,8 @@ private fun WeatherApp(
     modifier: Modifier = Modifier,
 ) {
     val colors = listOf(
-        BackgroundAfternoon.copy(alpha = 0.4f),
-        BackgroundAfternoon.copy(alpha = 0.3f),
+        BackgroundMorning.copy(alpha = 0.4f),
+        Color.Transparent,
         Color.Transparent,
     )
     val brush = Brush.verticalGradient(colors)
@@ -64,40 +65,37 @@ private fun WeatherApp(
             .fillMaxSize()
             .background(brush = brush),
     ) {
-        Spacer(modifier = Modifier.weight(0.1f))
-        WeatherCard(
+        WeatherBanner(
             modifier = Modifier.fillMaxWidth(),
         )
-        Card(
-            modifier = Modifier
-                .weight(0.9f)
-                .fillMaxWidth()
-                .padding(8.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
-            ),
-        ) {}
+        FineDustCard(
+            modifier = Modifier.fillMaxWidth(),
+        )
     }
 }
 
 @Composable
-private fun WeatherCard(
+private fun WeatherBanner(
     modifier: Modifier = Modifier,
 ) {
     val composition by rememberLottieComposition(
-        spec = LottieCompositionSpec.RawRes(R.raw.animation_weather_sunny),
+        spec = LottieCompositionSpec.RawRes(R.raw.animation_weather_rainy),
     )
 
     Row(
         modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.Bottom,
     ) {
         LottieAnimation(
             modifier = Modifier
-                .height(80.dp)
-                .weight(0.4f),
+                .size(120.dp)
+                .padding(
+                    start = 16.dp,
+                    top = 16.dp,
+                ),
             composition = composition,
             iterations = LottieConstants.IterateForever,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillWidth,
         )
         Column(
             modifier = Modifier.weight(0.6f),
@@ -122,4 +120,11 @@ private fun WeatherCard(
 private fun FineDustCard(
     modifier: Modifier = Modifier,
 ) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+    ) {
+        Box(modifier = Modifier.size(128.dp))
+    }
 }
