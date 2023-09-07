@@ -4,6 +4,8 @@ import app.junsu.weather.data.FineDustStatus
 import app.junsu.weather.data.Humidity
 import app.junsu.weather.data.UvStatus
 import app.junsu.weather.data.WeatherStatus
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -16,35 +18,35 @@ class WeatherCrawler(
     private val jsoupDoc: Document
         get() = connection.get()
 
-    val temperature: Float
-        get() {
+    val temperature: Flow<Float>
+        get() = flow {
             val stringValue =
                 jsoupDoc.select("div.temperature_text")[0].text().substring(5).dropLast(1)
-            return stringValue.toFloat()
+            emit(stringValue.toFloat())
         }
 
-    val weatherStatus: WeatherStatus
-        get() {
+    val weatherStatus: Flow<WeatherStatus>
+        get() = flow {
             val koreanValue = jsoupDoc.getElementsByClass("weather before_slash")[0].text()
-            return WeatherStatus.fromString(koreanValue)
+            emit(WeatherStatus.fromString(koreanValue))
         }
 
-    val fineDustStatus: FineDustStatus
-        get() {
+    val fineDustStatus: Flow<FineDustStatus>
+        get() = flow {
             val koreanValue =
                 jsoupDoc.getElementsByClass("item_today level2")[0].text().substring(5)
-            return FineDustStatus.fromString(koreanValue)
+            emit(FineDustStatus.fromString(koreanValue))
         }
 
-    val humidity: Humidity
-        get() {
+    val humidity: Flow<Humidity>
+        get() = flow {
             val koreanValue = jsoupDoc.select(".summary_list")[0].text().substring(12, 15)
-            return Humidity.of(koreanValue)
+            emit(Humidity.of(koreanValue))
         }
 
-    val uvStatus: UvStatus
-        get() {
+    val uvStatus: Flow<UvStatus>
+        get() = flow {
             val koreanValue = jsoupDoc.getElementsByClass("item_today level1")[0].text()
-            return UvStatus.fromString(koreanValue)
+            emit(UvStatus.fromString(koreanValue))
         }
 }
