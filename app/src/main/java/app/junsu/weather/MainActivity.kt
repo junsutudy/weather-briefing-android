@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,17 +61,20 @@ private fun WeatherApp(
         Color.Transparent,
     )
     val brush = Brush.verticalGradient(colors)
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(brush = brush),
-    ) {
-        WeatherBanner(
-            modifier = Modifier.fillMaxWidth(),
-        )
-        FineDustCard(
-            modifier = Modifier.fillMaxWidth(),
-        )
+    Scaffold { padValues ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .background(brush = brush)
+                .padding(padValues),
+        ) {
+            WeatherBanner(
+                modifier = Modifier.fillMaxWidth(),
+            )
+            FineDustCard(
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
     }
 }
 
@@ -83,7 +87,9 @@ private fun WeatherBanner(
     )
 
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 32.dp),
         verticalAlignment = Alignment.Bottom,
     ) {
         LottieAnimation(
