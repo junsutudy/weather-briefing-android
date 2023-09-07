@@ -1,6 +1,7 @@
 package app.junsu.weather.data.datasource.network.crawler
 
 import app.junsu.weather.data.FineDustStatus
+import app.junsu.weather.data.Humidity
 import app.junsu.weather.data.UvStatus
 import app.junsu.weather.data.WeatherStatus
 import org.jsoup.Connection
@@ -15,9 +16,11 @@ class WeatherCrawler(
     private val jsoupDoc: Document
         get() = connection.get()
 
-    val temperature: String
+    val temperature: Float
         get() {
-            return jsoupDoc.select("div.temperature_text")[0].text().substring(5)
+            val stringValue =
+                jsoupDoc.select("div.temperature_text")[0].text().substring(5).dropLast(1)
+            return stringValue.toFloat()
         }
 
     val weatherStatus: WeatherStatus
@@ -33,9 +36,10 @@ class WeatherCrawler(
             return FineDustStatus.fromString(koreanValue)
         }
 
-    val humidityStatus: String
+    val humidity: Humidity
         get() {
-            return jsoupDoc.select(".summary_list")[0].text().substring(12, 15)
+            val koreanValue = jsoupDoc.select(".summary_list")[0].text().substring(12, 15)
+            return Humidity.of(koreanValue)
         }
 
     val uvStatus: UvStatus
