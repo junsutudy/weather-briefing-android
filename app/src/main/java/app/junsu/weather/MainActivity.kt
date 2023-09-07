@@ -19,6 +19,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,16 +52,20 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Stable
+private val colors = listOf(
+    BackgroundMorning.copy(alpha = 0.5f),
+    BackgroundMorning.copy(alpha = 0.4f),
+    BackgroundMorning.copy(alpha = 0.2f),
+)
+
+@Stable
+private val brush = Brush.verticalGradient(colors)
+
 @Composable
 private fun WeatherApp(
     modifier: Modifier = Modifier,
 ) {
-    val colors = listOf(
-        BackgroundMorning.copy(alpha = 0.4f),
-        Color.Transparent,
-        Color.Transparent,
-    )
-    val brush = Brush.verticalGradient(colors)
     Scaffold { padValues ->
         Column(
             modifier = modifier
