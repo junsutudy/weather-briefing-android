@@ -22,6 +22,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import app.junsu.weather.data.WeatherStatus
 import app.junsu.weather.ui.theme.BackgroundAfternoon
 import app.junsu.weather.ui.theme.BackgroundDawn
 import app.junsu.weather.ui.theme.BackgroundMidday
@@ -38,15 +40,20 @@ import app.junsu.weather.ui.theme.BackgroundNight
 import app.junsu.weather.ui.theme.BackgroundSunrise
 import app.junsu.weather.ui.theme.BackgroundSunset
 import app.junsu.weather.ui.theme.WeatherBriefingTheme
+import app.junsu.weather.ui.weather.WeatherViewModel
 import app.junsu.weather.util.TimePart
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
+import org.koin.androidx.compose.koinViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+    private val viewModel: MainActivityViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel
         setContent {
             WeatherBriefingTheme {
                 Surface(
@@ -88,7 +95,10 @@ private val currentGradientBackgroundBrush = Brush.verticalGradient(currentBackg
 @Composable
 private fun WeatherApp(
     modifier: Modifier = Modifier,
+    //todo
+    weatherViewModel: WeatherViewModel = koinViewModel(),
 ) {
+    val uiState by weatherViewModel.flow.collectAsState()
     Scaffold { padValues ->
         Column(
             modifier = modifier
@@ -98,6 +108,8 @@ private fun WeatherApp(
         ) {
             WeatherBanner(
                 modifier = Modifier.fillMaxWidth(),
+                // weatherStatus = uiState.value.
+                temperature = uiState.temperature,
             )
             FineDustCard(
                 modifier = Modifier.fillMaxWidth(),
@@ -119,11 +131,14 @@ private val cardColors: CardColors
 @Composable
 private fun WeatherBanner(
     modifier: Modifier = Modifier,
+    // weatherStatus: WeatherStatus,
+    temperature: Float,
 ) {
     val composition by rememberLottieComposition(
-        spec = LottieCompositionSpec.RawRes(R.raw.animation_weather_rainy),
+        spec = LottieCompositionSpec.RawRes(getWeatherAnimationRaw(WeatherStatus.CLOUDY)),
     )
 
+    println("TEMPTEMP: $temperature")
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -159,7 +174,7 @@ private fun WeatherBanner(
                     )
                     Text(
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        text = "23\'",
+                        text = "${temperature}℃",
                         style = MaterialTheme.typography.displayLarge,
                     )
                 }
@@ -167,6 +182,13 @@ private fun WeatherBanner(
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
+}
+
+private fun getWeatherAnimationRaw(weatherStatus: WeatherStatus): Int = when (weatherStatus) {
+    WeatherStatus.SUNNY -> R.raw.animation_weather_sunny
+    WeatherStatus.CLOUDY -> R.raw.animation_weather_cloudy
+    WeatherStatus.RAINY -> R.raw.animation_weather_rainy
+    WeatherStatus.SNOWY -> R.raw.animation_weather_snowy
 }
 
 @Composable
