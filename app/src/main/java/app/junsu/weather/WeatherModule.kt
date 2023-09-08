@@ -9,14 +9,15 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val weatherModule: Module
-    inline get() = module {
-        viewModel<MainActivityViewModel> { MainActivityViewModel(get()) }
+    get() = module {
+        includes(dataModule)
         viewModelOf(::MainActivityViewModel)
+        viewModel<MainActivityViewModel> { MainActivityViewModel(get()) }
     }
 
 val dataModule: Module
-    inline get() = module {
-        single<WeatherCrawler> { WeatherCrawler(get()) }
+    get() = module {
+        single<WeatherCrawler> { WeatherCrawler(searchedWeatherUrl) }
         single<WeatherNetworkDataSource> { WeatherNetworkDataSource(get()) }
         single<WeatherRepository> { WeatherRepository(get()) }
     }

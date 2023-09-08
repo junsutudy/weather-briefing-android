@@ -2,7 +2,8 @@ package app.junsu.weather
 
 import android.app.Application
 import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.koinApplication
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class WeatherApplication : Application() {
     override fun onCreate() {
@@ -11,9 +12,10 @@ class WeatherApplication : Application() {
     }
 
     private fun initKoin() {
-        koinApplication {
+        startKoin {
+            androidLogger()
             androidContext(this@WeatherApplication)
-            modules()
+            modules(weatherModule)
         }
     }
 }
