@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -115,9 +114,24 @@ private fun WeatherApp(
                 // weatherStatus = uiState.value.
                 temperature = uiState.temperature,
             )
-            FineDustCard(
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-            )
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Card(
+                    modifier = Modifier
+                        .weight(0.3f)
+                        .padding(start = 8.dp),
+                    colors = cardColors,
+                ) {
+                    Box(modifier = Modifier.size(128.dp))
+                }
+                FineDustCard(
+                    modifier = Modifier
+                        .weight(0.7f)
+                        .padding(end = 8.dp),
+                )
+            }
         }
     }
 }
@@ -170,9 +184,9 @@ private fun WeatherBanner(
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(
                         space = 8.dp,
-                        Alignment.End,
+                        alignment = Alignment.End,
                     ),
-                    verticalAlignment = Alignment.Bottom
+                    verticalAlignment = Alignment.Bottom,
                 ) {
                     Text(
                         modifier = Modifier.padding(
@@ -184,7 +198,6 @@ private fun WeatherBanner(
                     )
                     Text(
                         modifier = Modifier.padding(end = 16.dp),
-                        //  text = "${temperature}℃",
                         text = buildAnnotatedString {
                             withStyle(
                                 style = MaterialTheme.typography.displayLarge.toSpanStyle(),
@@ -217,9 +230,7 @@ private fun FineDustCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp),
+        modifier = modifier.fillMaxWidth(),
         colors = cardColors,
     ) {
         Box(modifier = Modifier.size(128.dp))
