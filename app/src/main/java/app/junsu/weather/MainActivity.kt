@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -29,6 +31,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import app.junsu.weather.data.WeatherStatus
 import app.junsu.weather.ui.theme.BackgroundAfternoon
@@ -138,7 +142,6 @@ private fun WeatherBanner(
         spec = LottieCompositionSpec.RawRes(getWeatherAnimationRaw(WeatherStatus.CLOUDY)),
     )
 
-    println("TEMPTEMP: $temperature")
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -164,18 +167,36 @@ private fun WeatherBanner(
                 modifier = Modifier.padding(end = 8.dp),
                 colors = cardColors,
             ) {
-                Column(
-                    horizontalAlignment = Alignment.End,
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(
+                        space = 8.dp,
+                        Alignment.End,
+                    ),
+                    verticalAlignment = Alignment.Bottom
                 ) {
                     Text(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        text = "9월 6일",
+                        modifier = Modifier.padding(
+                            start = 16.dp,
+                            bottom = 8.dp,
+                        ),
+                        text = "맑음" + ',',
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     Text(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        text = "${temperature}℃",
-                        style = MaterialTheme.typography.displayLarge,
+                        modifier = Modifier.padding(end = 16.dp),
+                        //  text = "${temperature}℃",
+                        text = buildAnnotatedString {
+                            withStyle(
+                                style = MaterialTheme.typography.displayLarge.toSpanStyle(),
+                            ) {
+                                append(temperature.toString())
+                            }
+                            withStyle(
+                                style = MaterialTheme.typography.bodyMedium.toSpanStyle(),
+                            ) {
+                                append("℃")
+                            }
+                        },
                     )
                 }
             }
