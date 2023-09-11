@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Weather Briefing</string>
-    <string name="weather_sunny">맑음</string>
-    <string name="weather_cloudy">구름</string>
-    <string name="weather_rainy">비</string>
-    <string name="weather_snowy">눈</string>
-    <string name="weather_loading">…</string>
+    <string name="weather_sunny">Clear</string>
+    <string name="weather_cloudy">Cloudy</string>
+    <string name="weather_rainy">Rainy</string>
+    <string name="weather_snowy">Snowy</string>
+    <string name="weather_loading" translatable="false">…</string>
 </resources>
