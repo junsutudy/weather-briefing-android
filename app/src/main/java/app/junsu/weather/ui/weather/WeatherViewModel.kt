@@ -24,7 +24,9 @@ class WeatherViewModel(
 
     private fun fetchTemperature() {
         viewModelScope.launch(Dispatchers.IO) {
-            _stateFlow.emit(_stateFlow.value.copy(temperature = weatherRepository.fetchTemperature().first()))
+            _stateFlow.emit(
+                _stateFlow.value.copy(temperature = weatherRepository.fetchTemperature().first()),
+            )
         }
     }
 }
