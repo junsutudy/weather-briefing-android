@@ -5,13 +5,18 @@ import androidx.lifecycle.viewModelScope
 import app.junsu.weather.data.repository.WeatherRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(
     private val weatherRepository: WeatherRepository,
 ) : ViewModel() {
-    val flow = MutableStateFlow(WeatherUiState.initial())
+
+    private val _stateFlow = MutableStateFlow(WeatherUiState.initial())
+    val stateFlow: StateFlow<WeatherUiState>
+        get() = _stateFlow.asStateFlow()
 
     init {
         fetchTemperature()
@@ -19,7 +24,7 @@ class WeatherViewModel(
 
     private fun fetchTemperature() {
         viewModelScope.launch(Dispatchers.IO) {
-            flow.emit(flow.value.copy(temperature = weatherRepository.fetchTemperature().first()))
+            _stateFlow.emit(_stateFlow.value.copy(temperature = weatherRepository.fetchTemperature().first()))
         }
     }
 }
