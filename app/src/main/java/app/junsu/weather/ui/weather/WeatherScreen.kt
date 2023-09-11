@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -166,6 +167,7 @@ private fun WeatherBanner(
         Spacer(modifier = Modifier.weight(1f))
         TemperatureCard(
             temperature = temperature,
+            weatherStatus = weatherStatus,
         )
     }
 }
@@ -174,6 +176,7 @@ private fun WeatherBanner(
 private fun TemperatureCard(
     modifier: Modifier = Modifier,
     temperature: Float?,
+    weatherStatus: WeatherStatus?,
 ) {
     Card(
         modifier = modifier.padding(end = 8.dp),
@@ -191,7 +194,7 @@ private fun TemperatureCard(
                     start = 16.dp,
                     bottom = 8.dp,
                 ),
-                text = "맑음" + ',',
+                text = weatherStatus.text + ',',
                 style = MaterialTheme.typography.bodyMedium,
             )
             Text(
@@ -214,6 +217,15 @@ private fun TemperatureCard(
         }
     }
 }
+
+private val WeatherStatus?.text: String
+    @Composable inline get() = when (this) {
+        WeatherStatus.SUNNY -> stringResource(id = R.string.weather_sunny)
+        WeatherStatus.CLOUDY -> stringResource(id = R.string.weather_cloudy)
+        WeatherStatus.RAINY -> stringResource(id = R.string.weather_rainy)
+        WeatherStatus.SNOWY -> stringResource(id = R.string.weather_snowy)
+        null -> stringResource(id = R.string.weather_loading)
+    }
 
 @Composable
 private fun FineDustCard(
