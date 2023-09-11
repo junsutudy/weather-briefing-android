@@ -93,14 +93,9 @@ fun WeatherScreen(
                     .padding(end = 8.dp),
             )
         }
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            colors = cardColors,
-        ) {
-            Box(modifier = Modifier.size(128.dp))
-        }
+        HeadlineCard(
+            modifier = Modifier.fillMaxWidth(),
+        )
     }
 }
 
@@ -281,4 +276,18 @@ private fun getWeatherAnimationRaw(weatherStatus: WeatherStatus?): Int = when (w
     WeatherStatus.RAINY -> R.raw.animation_weather_rainy
     WeatherStatus.SNOWY -> R.raw.animation_weather_snowy
     null -> R.raw.animation_loading
+}
+
+@Composable
+private fun HeadlineCard(
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
+        colors = cardColors,
+    ) {
+        Box(modifier = Modifier.size(128.dp))
+    }
 }
