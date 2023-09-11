@@ -108,6 +108,7 @@ private fun WeatherApp(
                 .fillMaxSize()
                 .background(brush = currentGradientBackgroundBrush)
                 .padding(padValues),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             WeatherBanner(
                 modifier = Modifier.fillMaxWidth(),
@@ -131,6 +132,27 @@ private fun WeatherApp(
                         .weight(0.7f)
                         .padding(end = 8.dp),
                 )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Card(
+                    modifier = Modifier
+                        .weight(0.7f)
+                        .padding(start = 8.dp),
+                    colors = cardColors,
+                ) {
+                    Box(modifier = Modifier.size(128.dp))
+                }
+                Card(
+                    modifier = Modifier
+                        .weight(0.3f)
+                        .padding(end = 8.dp),
+                    colors = cardColors,
+                ) {
+                    Box(modifier = Modifier.size(128.dp))
+                }
             }
         }
     }
@@ -213,7 +235,6 @@ private fun WeatherBanner(
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
