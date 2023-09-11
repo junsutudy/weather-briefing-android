@@ -16,7 +16,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.junsu.weather.R
 import app.junsu.weather.data.WeatherStatus
 import app.junsu.weather.ui.theme.BackgroundAfternoon
@@ -48,7 +48,7 @@ fun WeatherScreen(
     modifier: Modifier = Modifier,
     weatherViewModel: WeatherViewModel = koinViewModel(),
 ) {
-    val uiState by weatherViewModel.flow.collectAsState()
+    val uiState by weatherViewModel.stateFlow.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -58,22 +58,18 @@ fun WeatherScreen(
     ) {
         WeatherBanner(
             modifier = Modifier.fillMaxWidth(),
-            // weatherStatus = uiState.value.
             temperature = uiState.temperature,
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Card(
+            FineDustCard(
                 modifier = Modifier
                     .weight(0.3f)
                     .padding(start = 8.dp),
-                colors = cardColors,
-            ) {
-                Box(modifier = Modifier.size(128.dp))
-            }
-            FineDustCard(
+            )
+            HumidityCard(
                 modifier = Modifier
                     .weight(0.7f)
                     .padding(end = 8.dp),
@@ -83,22 +79,16 @@ fun WeatherScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            Card(
+            UvCard(
                 modifier = Modifier
                     .weight(0.7f)
                     .padding(start = 8.dp),
-                colors = cardColors,
-            ) {
-                Box(modifier = Modifier.size(128.dp))
-            }
-            Card(
+            )
+            MoreInformationCard(
                 modifier = Modifier
                     .weight(0.3f)
                     .padding(end = 8.dp),
-                colors = cardColors,
-            ) {
-                Box(modifier = Modifier.size(128.dp))
-            }
+            )
         }
         Card(
             modifier = Modifier
@@ -147,7 +137,6 @@ private val cardColors: CardColors
 @Composable
 private fun WeatherBanner(
     modifier: Modifier = Modifier,
-    // weatherStatus: WeatherStatus,
     temperature: Float,
 ) {
     val composition by rememberLottieComposition(
@@ -215,11 +204,16 @@ private fun WeatherBanner(
     }
 }
 
-private fun getWeatherAnimationRaw(weatherStatus: WeatherStatus): Int = when (weatherStatus) {
-    WeatherStatus.SUNNY -> R.raw.animation_weather_sunny
-    WeatherStatus.CLOUDY -> R.raw.animation_weather_cloudy
-    WeatherStatus.RAINY -> R.raw.animation_weather_rainy
-    WeatherStatus.SNOWY -> R.raw.animation_weather_snowy
+@Composable
+private fun WeatherCard(
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = cardColors,
+    ) {
+        Box(modifier = Modifier.size(128.dp))
+    }
 }
 
 @Composable
@@ -234,3 +228,45 @@ private fun FineDustCard(
     }
 }
 
+@Composable
+private fun HumidityCard(
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = cardColors,
+    ) {
+        Box(modifier = Modifier.size(128.dp))
+    }
+}
+
+@Composable
+private fun UvCard(
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = cardColors,
+    ) {
+        Box(modifier = Modifier.size(128.dp))
+    }
+}
+
+@Composable
+private fun MoreInformationCard(
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = cardColors,
+    ) {
+        Box(modifier = Modifier.size(128.dp))
+    }
+}
+
+private fun getWeatherAnimationRaw(weatherStatus: WeatherStatus): Int = when (weatherStatus) {
+    WeatherStatus.SUNNY -> R.raw.animation_weather_sunny
+    WeatherStatus.CLOUDY -> R.raw.animation_weather_cloudy
+    WeatherStatus.RAINY -> R.raw.animation_weather_rainy
+    WeatherStatus.SNOWY -> R.raw.animation_weather_snowy
+}
