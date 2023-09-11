@@ -60,6 +60,7 @@ fun WeatherScreen(
         WeatherBanner(
             modifier = Modifier.fillMaxWidth(),
             temperature = uiState.weather?.temperature,
+            weatherStatus = uiState.weather?.weatherStatus,
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -139,9 +140,10 @@ private val cardColors: CardColors
 private fun WeatherBanner(
     modifier: Modifier = Modifier,
     temperature: Float?,
+    weatherStatus: WeatherStatus?,
 ) {
     val composition by rememberLottieComposition(
-        spec = LottieCompositionSpec.RawRes(getWeatherAnimationRaw(WeatherStatus.CLOUDY)),
+        spec = LottieCompositionSpec.RawRes(getWeatherAnimationRaw(weatherStatus)),
     )
 
     Row(
@@ -162,13 +164,16 @@ private fun WeatherBanner(
             contentScale = ContentScale.FillWidth,
         )
         Spacer(modifier = Modifier.weight(1f))
-        WeatherCard()
+        TemperatureCard(
+            temperature = temperature,
+        )
     }
 }
 
 @Composable
-private fun WeatherCard(
+private fun TemperatureCard(
     modifier: Modifier = Modifier,
+    temperature: Float?,
 ) {
     Card(
         modifier = modifier.padding(end = 8.dp),
@@ -195,7 +200,9 @@ private fun WeatherCard(
                     withStyle(
                         style = MaterialTheme.typography.displayLarge.toSpanStyle(),
                     ) {
-                        append(1234.toString())
+                        if (temperature != null) {
+                            append(temperature.toString())
+                        }
                     }
                     withStyle(
                         style = MaterialTheme.typography.bodyMedium.toSpanStyle(),
@@ -256,9 +263,10 @@ private fun MoreInformationCard(
     }
 }
 
-private fun getWeatherAnimationRaw(weatherStatus: WeatherStatus): Int = when (weatherStatus) {
+private fun getWeatherAnimationRaw(weatherStatus: WeatherStatus?): Int = when (weatherStatus) {
     WeatherStatus.SUNNY -> R.raw.animation_weather_sunny
     WeatherStatus.CLOUDY -> R.raw.animation_weather_cloudy
     WeatherStatus.RAINY -> R.raw.animation_weather_rainy
     WeatherStatus.SNOWY -> R.raw.animation_weather_snowy
+    null -> R.raw.animation_loading
 }
