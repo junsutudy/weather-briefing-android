@@ -7,7 +7,6 @@ enum class TimePart {
     ;
 
     companion object {
-
         fun from(currentTime: LocalDateTime) = when (currentTime.hour) {
             in 1 until 5 -> DAWN
             in 5 until 7 -> SUNRISE
