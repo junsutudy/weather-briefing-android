@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -58,7 +59,7 @@ fun WeatherScreen(
     ) {
         WeatherBanner(
             modifier = Modifier.fillMaxWidth(),
-            temperature = uiState.temperature,
+            temperature = uiState.weather?.temperature,
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -137,7 +138,7 @@ private val cardColors: CardColors
 @Composable
 private fun WeatherBanner(
     modifier: Modifier = Modifier,
-    temperature: Float,
+    temperature: Float?,
 ) {
     val composition by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(getWeatherAnimationRaw(WeatherStatus.CLOUDY)),
@@ -151,56 +152,17 @@ private fun WeatherBanner(
     ) {
         LottieAnimation(
             modifier = Modifier
-                .size(120.dp)
                 .padding(
                     start = 16.dp,
                     top = 16.dp,
-                ),
+                )
+                .size(120.dp),
             composition = composition,
             iterations = LottieConstants.IterateForever,
             contentScale = ContentScale.FillWidth,
         )
-        Column(
-            modifier = Modifier.weight(0.6f),
-            horizontalAlignment = Alignment.End,
-        ) {
-            Card(
-                modifier = Modifier.padding(end = 8.dp),
-                colors = cardColors,
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(
-                        space = 8.dp,
-                        alignment = Alignment.End,
-                    ),
-                    verticalAlignment = Alignment.Bottom,
-                ) {
-                    Text(
-                        modifier = Modifier.padding(
-                            start = 16.dp,
-                            bottom = 8.dp,
-                        ),
-                        text = "맑음" + ',',
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                    Text(
-                        modifier = Modifier.padding(end = 16.dp),
-                        text = buildAnnotatedString {
-                            withStyle(
-                                style = MaterialTheme.typography.displayLarge.toSpanStyle(),
-                            ) {
-                                append(temperature.toString())
-                            }
-                            withStyle(
-                                style = MaterialTheme.typography.bodyMedium.toSpanStyle(),
-                            ) {
-                                append("℃")
-                            }
-                        },
-                    )
-                }
-            }
-        }
+        Spacer(modifier = Modifier.weight(1f))
+        WeatherCard()
     }
 }
 
@@ -209,10 +171,40 @@ private fun WeatherCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.padding(end = 8.dp),
         colors = cardColors,
     ) {
-        Box(modifier = Modifier.size(128.dp))
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(
+                space = 8.dp,
+                alignment = Alignment.End,
+            ),
+            verticalAlignment = Alignment.Bottom,
+        ) {
+            Text(
+                modifier = Modifier.padding(
+                    start = 16.dp,
+                    bottom = 8.dp,
+                ),
+                text = "맑음" + ',',
+                style = MaterialTheme.typography.bodyMedium,
+            )
+            Text(
+                modifier = Modifier.padding(end = 16.dp),
+                text = buildAnnotatedString {
+                    withStyle(
+                        style = MaterialTheme.typography.displayLarge.toSpanStyle(),
+                    ) {
+                        append(1234.toString())
+                    }
+                    withStyle(
+                        style = MaterialTheme.typography.bodyMedium.toSpanStyle(),
+                    ) {
+                        append("℃")
+                    }
+                },
+            )
+        }
     }
 }
 
