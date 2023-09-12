@@ -34,7 +34,7 @@ class WeatherCrawler(
     val fineDustStatus: Flow<FineDustStatus>
         get() = flow {
             val koreanValue =
-                jsoupDoc.getElementsByClass("item_today level2")[0].text().substring(5)
+                jsoupDoc.getElementsByClass("item_today")[0].text().substring(5)
             emit(FineDustStatus.fromString(koreanValue))
         }
 
@@ -46,7 +46,7 @@ class WeatherCrawler(
 
     val uvStatus: Flow<UvStatus>
         get() = flow {
-            val koreanValue = jsoupDoc.getElementsByClass("item_today level1")[0].text()
+            val koreanValue = jsoupDoc.getElementsByClass("item_today")[2].text().also { println("UVUVUV: $it") }
             emit(UvStatus.fromString(koreanValue))
         }
 }
