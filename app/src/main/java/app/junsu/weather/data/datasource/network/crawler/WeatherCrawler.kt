@@ -46,7 +46,7 @@ class WeatherCrawler(
 
     val uvStatus: Flow<UvStatus>
         get() = flow {
-            val koreanValue = jsoupDoc.getElementsByClass("item_today")[2].text().also { println("UVUVUV: $it") }
+            val koreanValue = jsoupDoc.getElementsByClass("item_today")[2].text()
             emit(UvStatus.fromString(koreanValue))
         }
 }
