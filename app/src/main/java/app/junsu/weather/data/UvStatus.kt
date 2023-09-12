@@ -12,7 +12,7 @@ enum class UvStatus {
             "매우", "매우높음" -> VERY_HIGH
             "높음" -> HIGH
             "보통" -> NORMAL
-            "낮음" -> LOW
+            "좋음" -> LOW
             else -> NORMAL
         }
     }
