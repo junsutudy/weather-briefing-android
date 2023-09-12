@@ -13,10 +13,8 @@ import org.jsoup.nodes.Document
 class WeatherCrawler(
     override val url: String,
 ) : Crawler {
-    private val connection: Connection
-        get() = Jsoup.connect(url)
-    private val jsoupDoc: Document
-        get() = connection.get()
+    private val connection: Connection = Jsoup.connect(url)
+    private val jsoupDoc: Document = connection.get()
 
     val temperature: Flow<Float>
         get() = flow {
