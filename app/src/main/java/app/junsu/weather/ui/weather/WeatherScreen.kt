@@ -1,6 +1,7 @@
 package app.junsu.weather.ui.weather
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -227,7 +228,9 @@ private fun FineDustCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { },
         colors = cardColors,
     ) {
         Box(modifier = Modifier.size(128.dp))
@@ -239,7 +242,9 @@ private fun HumidityCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { },
         colors = cardColors,
     ) {
         Box(modifier = Modifier.size(128.dp))
@@ -251,7 +256,9 @@ private fun UvCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { },
         colors = cardColors,
     ) {
         Box(modifier = Modifier.size(128.dp))
@@ -263,7 +270,9 @@ private fun MoreInformationCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { },
         colors = cardColors,
     ) {
         Box(modifier = Modifier.size(128.dp))
