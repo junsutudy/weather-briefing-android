@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.Flow
 class WeatherNetworkDataSource(
     private val weatherCrawler: WeatherCrawler,
 ) {
-    fun fetchTemperature(): Flow<Float> = weatherCrawler.temperature
-    fun fetchWeatherStatus(): Flow<WeatherStatus> = weatherCrawler.weatherStatus
-    fun fetchFineDustStatus(): Flow<FineDustStatus> = weatherCrawler.fineDustStatus
-    fun fetchHumidity(): Flow<Humidity> = weatherCrawler.humidity
-    fun fetchUvStatus(): Flow<UvStatus> = weatherCrawler.uvStatus
+    fun temperatureFlow(): Flow<Float> = weatherCrawler.temperature
+    fun weatherStatusFlow(): Flow<WeatherStatus> = weatherCrawler.weatherStatus
+    fun fineDustStatusFlow(): Flow<FineDustStatus> = weatherCrawler.fineDustStatus
+    fun humidityFlow(): Flow<Humidity> = weatherCrawler.humidity
+    fun uvStatusFlow(): Flow<UvStatus> = weatherCrawler.uvStatus
 }

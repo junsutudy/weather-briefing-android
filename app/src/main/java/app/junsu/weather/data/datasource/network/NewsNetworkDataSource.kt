@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 class NewsNetworkDataSource(
     private val newsCrawler: NewsCrawler,
 ) {
-    fun fetchHeadlineNews(): Flow<HeadlineNews> = newsCrawler.headlineNews
+    fun headlineNewsFlow(): Flow<HeadlineNews> = newsCrawler.headlineNews
 }

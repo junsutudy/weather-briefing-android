@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class NewsRepository(
     private val newsNetworkDataSource: NewsNetworkDataSource,
 ) {
-    fun fetchHeadlineNews(): Flow<HeadlineNews> {
-        return newsNetworkDataSource.fetchHeadlineNews()
+    fun headlineNewsFlow(): Flow<HeadlineNews> {
+        return newsNetworkDataSource.headlineNewsFlow()
     }
 }

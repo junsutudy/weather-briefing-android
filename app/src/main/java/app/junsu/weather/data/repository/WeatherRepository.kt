@@ -9,11 +9,11 @@ class WeatherRepository(
 ) {
     suspend fun fetchWeather(): Weather {
         return Weather(
-            temperature = weatherNetworkDataSource.fetchTemperature().first(),
-            weatherStatus = weatherNetworkDataSource.fetchWeatherStatus().first(),
-            fineDustStatus = weatherNetworkDataSource.fetchFineDustStatus().first(),
-            humidity = weatherNetworkDataSource.fetchHumidity().first(),
-            uvStatus = weatherNetworkDataSource.fetchUvStatus().first(),
+            temperature = weatherNetworkDataSource.temperatureFlow().first(),
+            weatherStatus = weatherNetworkDataSource.weatherStatusFlow().first(),
+            fineDustStatus = weatherNetworkDataSource.fineDustStatusFlow().first(),
+            humidity = weatherNetworkDataSource.humidityFlow().first(),
+            uvStatus = weatherNetworkDataSource.uvStatusFlow().first(),
         )
     }
 }
