@@ -5,4 +5,10 @@
     <string name="weather_rainy">Rainy</string>
     <string name="weather_snowy">Snowy</string>
     <string name="weather_loading" translatable="false">…</string>
+    <string name="uv">UV</string>
+    <string name="uv_very_high">Very High</string>
+    <string name="uv_high">High</string>
+    <string name="uv_normal">Normal</string>
+    <string name="uv_good">Good</string>
+    <string name="uv_loading" translatable="false">…</string>
 </resources>

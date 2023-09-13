@@ -5,4 +5,9 @@
     <string name="weather_cloudy">구름 낌</string>
     <string name="weather_rainy">비 내림</string>
     <string name="weather_snowy">눈 내림</string>
+    <string name="uv">자외선</string>
+    <string name="uv_very_high">매우 높음</string>
+    <string name="uv_high">높음</string>
+    <string name="uv_normal">보통</string>
+    <string name="uv_good">좋음</string>
 </resources>
