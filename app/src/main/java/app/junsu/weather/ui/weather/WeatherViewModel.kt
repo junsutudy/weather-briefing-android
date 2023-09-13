@@ -39,7 +39,7 @@ class WeatherViewModel(
 
     private fun fetchHeadlineNews() {
         viewModelScope.launch(Dispatchers.IO) {
-            val headline = newsRepository.fetchHeadlineNews().first()
+            val headline = newsRepository.headlineNewsFlow().first()
             _stateFlow.emit(
                 value = _stateFlow.value.copy(
                     headlineNews = headline,
