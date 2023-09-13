@@ -42,8 +42,8 @@ class WeatherCrawler(
 
     val humidity: Flow<Humidity>
         get() = flow {
-            val koreanValue = jsoupDoc.select(".summary_list")[0].text().substring(12, 15)
-            emit(Humidity.of(koreanValue))
+            val percentString = jsoupDoc.select(".summary_list")[0].text().substring(12, 15)
+            emit(Humidity.of(percentString))
         }
 
     val uvStatus: Flow<UvStatus>
