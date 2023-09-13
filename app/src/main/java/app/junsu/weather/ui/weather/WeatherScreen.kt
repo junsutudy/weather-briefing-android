@@ -1,5 +1,6 @@
 package app.junsu.weather.ui.weather
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -98,13 +100,11 @@ fun WeatherScreen(
             ) {
                 UvCard(
                     modifier = Modifier
-                        .weight(0.7f)
+                        .weight(1f)
                         .padding(start = 8.dp),
                 )
                 MoreInformationCard(
-                    modifier = Modifier
-                        .weight(0.3f)
-                        .padding(end = 8.dp),
+                    modifier = Modifier.padding(end = 8.dp),
                 )
             }
             HeadlineCard(
@@ -325,12 +325,20 @@ private fun MoreInformationCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .bouncingClickable { },
+        modifier = modifier.bouncingClickable { },
         colors = cardColors,
     ) {
-        Box(modifier = Modifier.size(128.dp))
+        Box(
+            contentAlignment = Alignment.Center,
+        ) {
+            Image(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .size(80.dp),
+                painter = painterResource(id = R.drawable.img_more),
+                contentDescription = "more",
+            )
+        }
     }
 }
 
