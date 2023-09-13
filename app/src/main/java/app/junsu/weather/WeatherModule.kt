@@ -1,5 +1,7 @@
 package app.junsu.weather
 
+import app.junsu.weather.data.datasource.network.crawler.SEARCHED_NEWS_URL
+import app.junsu.weather.data.datasource.network.crawler.SEARCHED_WEATHER_URL
 import app.junsu.weather.data.datasource.network.NewsNetworkDataSource
 import app.junsu.weather.data.datasource.network.WeatherNetworkDataSource
 import app.junsu.weather.data.datasource.network.crawler.NewsCrawler
