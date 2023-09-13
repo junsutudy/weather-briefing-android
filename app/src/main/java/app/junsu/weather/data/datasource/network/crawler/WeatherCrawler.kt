@@ -4,8 +4,10 @@ import app.junsu.weather.data.FineDustStatus
 import app.junsu.weather.data.Humidity
 import app.junsu.weather.data.UvStatus
 import app.junsu.weather.data.WeatherStatus
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 import org.jsoup.Connection
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -14,7 +16,9 @@ class WeatherCrawler(
     override val url: String,
 ) : Crawler {
     private val connection: Connection = Jsoup.connect(url)
-    private val jsoupDoc: Document = connection.get()
+    private val jsoupDoc: Document = runBlocking(Dispatchers.IO) {
+        connection.get()
+    }
 
     val temperature: Flow<Float>
         get() = flow {
