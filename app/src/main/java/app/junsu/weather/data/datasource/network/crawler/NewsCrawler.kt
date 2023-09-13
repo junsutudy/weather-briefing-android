@@ -19,8 +19,9 @@ class NewsCrawler(
 
     val headlineNews: Flow<HeadlineNews>
         get() = flow {
-            val thumbnailImageUrl = jsoupDoc.getElementsByClass("thumb").select("img")[0].text()
-            val title = jsoupDoc.getElementsByClass("info_title")[0].select("text").text()
+            val news = jsoupDoc.getElementsByClass("news_wrap api_ani_send")[0]
+            val thumbnailImageUrl = news.getElementsByClass("thumb.api_get").attr("src")
+            val title = news.getElementsByClass("news_tit")[0].text()
             emit(HeadlineNews(thumbnailImageUrl, title))
         }
 }
