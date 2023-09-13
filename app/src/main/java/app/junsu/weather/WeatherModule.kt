@@ -14,8 +14,8 @@ import org.koin.dsl.module
 val weatherModule: Module
     get() = module {
         includes(dataModule)
-        viewModel<MainActivityViewModel> { MainActivityViewModel(get()) }
-        viewModel<WeatherViewModel> { WeatherViewModel(get()) }
+        viewModel<MainActivityViewModel> { MainActivityViewModel() }
+        viewModel<WeatherViewModel> { WeatherViewModel(get(), get()) }
     }
 
 val dataModule: Module
