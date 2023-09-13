@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.ktor.client.serialization)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.jsoup)
+    implementation(libs.coil.compose)
     implementation(libs.lottie.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

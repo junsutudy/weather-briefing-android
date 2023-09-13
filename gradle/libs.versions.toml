@@ -1,5 +1,6 @@
 [versions]
 agp = "8.2.0-alpha16"
+coil-compose = "2.4.0"
 jsoup = "1.16.1"
 koin-android = "3.4.3"
 koin-androidx-compose = "3.4.6"
@@ -17,6 +18,7 @@ lottie-compose = "6.1.0"
 
 [libraries]
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle-runtime-compose" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
