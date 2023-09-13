@@ -232,13 +232,15 @@ private fun TemperatureCard(
 }
 
 private val WeatherStatus?.text: String
-    @Composable inline get() = when (this) {
-        WeatherStatus.SUNNY -> stringResource(id = R.string.weather_sunny)
-        WeatherStatus.CLOUDY -> stringResource(id = R.string.weather_cloudy)
-        WeatherStatus.RAINY -> stringResource(id = R.string.weather_rainy)
-        WeatherStatus.SNOWY -> stringResource(id = R.string.weather_snowy)
-        null -> stringResource(id = R.string.weather_loading)
-    }
+    @Composable inline get() = stringResource(
+        id = when (this) {
+            WeatherStatus.SUNNY -> R.string.weather_sunny
+            WeatherStatus.CLOUDY -> R.string.weather_cloudy
+            WeatherStatus.RAINY -> R.string.weather_rainy
+            WeatherStatus.SNOWY -> R.string.weather_snowy
+            null -> R.string.weather_loading
+        },
+    )
 
 @Composable
 private fun FineDustCard(
