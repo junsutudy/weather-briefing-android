@@ -1,7 +1,6 @@
 package app.junsu.weather.ui.weather
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,6 +40,7 @@ import app.junsu.weather.ui.theme.BackgroundNight
 import app.junsu.weather.ui.theme.BackgroundSunrise
 import app.junsu.weather.ui.theme.BackgroundSunset
 import app.junsu.weather.util.TimePart
+import app.junsu.weather.util.bouncingClickable
 import coil.compose.AsyncImage
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -246,7 +247,7 @@ private fun FineDustCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { },
+            .bouncingClickable { },
         colors = cardColors,
     ) {
         Box(modifier = Modifier.size(128.dp))
@@ -260,7 +261,7 @@ private fun HumidityCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { },
+            .bouncingClickable { },
         colors = cardColors,
     ) {
         Box(modifier = Modifier.size(128.dp))
@@ -274,15 +275,47 @@ private fun UvCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { },
+            .bouncingClickable { },
         colors = cardColors,
     ) {
-        Row {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             AsyncImage(
-                modifier = Modifier.size(80.dp),
+                modifier = Modifier
+                    .padding(
+                        start = 8.dp,
+                        top = 8.dp,
+                        bottom = 8.dp,
+                    )
+                    .size(80.dp),
                 model = R.drawable.img_uv,
                 contentDescription = "uv image",
             )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            start = 8.dp,
+                            top = 8.dp,
+                        )
+                        .fillMaxWidth(),
+                    text = "자외선",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Text(
+                    modifier = Modifier.padding(
+                        start = 8.dp,
+                        bottom = 8.dp,
+                    ),
+                    text = "높음",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
         }
     }
 }
@@ -294,7 +327,7 @@ private fun MoreInformationCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { },
+            .bouncingClickable { },
         colors = cardColors,
     ) {
         Box(modifier = Modifier.size(128.dp))
