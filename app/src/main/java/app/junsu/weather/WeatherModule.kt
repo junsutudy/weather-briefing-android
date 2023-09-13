@@ -20,8 +20,8 @@ val weatherModule: Module
 
 val dataModule: Module
     get() = module {
-        single<NewsCrawler> { NewsCrawler(searchedNewsUrl) }
-        single<WeatherCrawler> { WeatherCrawler(searchedWeatherUrl) }
+        single<NewsCrawler> { NewsCrawler(SEARCHED_NEWS_URL) }
+        single<WeatherCrawler> { WeatherCrawler(SEARCHED_WEATHER_URL) }
         single<NewsNetworkDataSource> { NewsNetworkDataSource(get()) }
         single<WeatherNetworkDataSource> { WeatherNetworkDataSource(get()) }
         single<NewsRepository> { NewsRepository(get()) }
