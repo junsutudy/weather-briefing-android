@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.junsu.weather.R
 import app.junsu.weather.data.FineDustStatus
+import app.junsu.weather.data.HeadlineNews
 import app.junsu.weather.data.UvStatus
 import app.junsu.weather.data.WeatherStatus
 import app.junsu.weather.data.datasource.network.crawler.SEARCHED_FINE_DUST_URL
@@ -120,11 +121,12 @@ fun WeatherScreen(
                     onClick = { uriHandler.openUri(SEARCHED_WEATHER_URL) },
                 )
             }
-            HeadlineCard(
+            HeadlineNewsCard(
                 modifier = Modifier.weight(
                     weight = 1f,
                     fill = false,
                 ),
+                headlineNews = uiState.headlineNews,
             )
         }
     }
@@ -435,8 +437,9 @@ private fun getWeatherAnimationRaw(weatherStatus: WeatherStatus?): Int = when (w
 }
 
 @Composable
-private fun HeadlineCard(
+private fun HeadlineNewsCard(
     modifier: Modifier = Modifier,
+    headlineNews: HeadlineNews?,
 ) {
     Card(
         modifier = modifier
@@ -444,6 +447,7 @@ private fun HeadlineCard(
             .padding(horizontal = 8.dp),
         colors = cardColors,
     ) {
-        Box(modifier = Modifier.size(128.dp))
+        if (headlineNews != null)
+            Text(text = headlineNews.title)
     }
 }

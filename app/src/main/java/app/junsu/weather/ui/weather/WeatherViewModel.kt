@@ -23,26 +23,17 @@ class WeatherViewModel(
         get() = _stateFlow.asStateFlow()
 
     init {
-        fetchWeather()
-        fetchHeadlineNews()
+        initState()
     }
 
-    private fun fetchWeather() {
+    private fun initState() {
         viewModelScope.launch(Dispatchers.IO) {
+            val weather = weatherRepository.fetchWeather()
+            val headlineNews = newsRepository.headlineNewsFlow().first()
             _stateFlow.emit(
-                value = _stateFlow.value.copy(
-                    weather = weatherRepository.fetchWeather(),
-                ),
-            )
-        }
-    }
-
-    private fun fetchHeadlineNews() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val headline = newsRepository.headlineNewsFlow().first()
-            _stateFlow.emit(
-                value = _stateFlow.value.copy(
-                    headlineNews = headline,
+                value = stateFlow.value.copy(
+                    weather = weather,
+                    headlineNews = headlineNews,
                 ),
             )
         }
