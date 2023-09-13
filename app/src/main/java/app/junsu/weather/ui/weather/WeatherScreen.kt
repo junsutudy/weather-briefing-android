@@ -90,17 +90,13 @@ fun WeatherScreen(
                     .padding(top = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                FineDustCard(
-                    modifier = Modifier.padding(start = 8.dp),
+                FineDustCard(modifier = Modifier.padding(start = 8.dp),
                     fineDustStatus = uiState.weather?.fineDustStatus,
-                    onClick = { uriHandler.openUri(SEARCHED_FINE_DUST_URL) }
-                )
-                HumidityCard(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 8.dp),
-                    onClick = { uriHandler.openUri(SEARCHED_HUMIDITY_URL) }
-                )
+                    onClick = { uriHandler.openUri(SEARCHED_FINE_DUST_URL) })
+                HumidityCard(modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp),
+                    onClick = { uriHandler.openUri(SEARCHED_HUMIDITY_URL) })
             }
             Row(
                 modifier = Modifier.weight(
@@ -109,13 +105,11 @@ fun WeatherScreen(
                 ),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                UvCard(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 8.dp),
+                UvCard(modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp),
                     uvStatus = uiState.weather?.uvStatus,
-                    onClick = { uriHandler.openUri(SEARCHED_UV_URL) }
-                )
+                    onClick = { uriHandler.openUri(SEARCHED_UV_URL) })
                 MoreInformationCard(
                     modifier = Modifier.padding(end = 8.dp),
                     onClick = { uriHandler.openUri(SEARCHED_WEATHER_URL) },
@@ -447,7 +441,25 @@ private fun HeadlineNewsCard(
             .padding(horizontal = 8.dp),
         colors = cardColors,
     ) {
-        if (headlineNews != null)
-            Text(text = headlineNews.title)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            if (headlineNews != null) {
+                Text(
+                    modifier = Modifier.padding(
+                        start = 8.dp,
+                        top = 8.dp,
+                        bottom = 8.dp,
+                        // todo remove
+                        end = 8.dp,
+                    ),
+                    text = headlineNews.title,
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+            } else {
+                // TODO: loading
+            }
+        }
     }
 }
