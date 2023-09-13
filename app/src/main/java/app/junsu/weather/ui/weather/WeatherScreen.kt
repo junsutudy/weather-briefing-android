@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -83,13 +84,12 @@ fun WeatherScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 FineDustCard(
-                    modifier = Modifier
-                        .weight(0.3f)
-                        .padding(start = 8.dp),
+                    modifier = Modifier.padding(start = 8.dp),
+                    fineDustStatus = uiState.weather?.fineDustStatus,
                 )
                 HumidityCard(
                     modifier = Modifier
-                        .weight(0.7f)
+                        .weight(1f)
                         .padding(end = 8.dp),
                 )
             }
@@ -248,11 +248,10 @@ private val WeatherStatus?.text: String
 @Composable
 private fun FineDustCard(
     modifier: Modifier = Modifier,
+    fineDustStatus: FineDustStatus?,
 ) {
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .bouncingClickable { },
+        modifier = modifier.bouncingClickable { },
         colors = cardColors,
     ) {
         Column(
@@ -262,10 +261,24 @@ private fun FineDustCard(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Image(
-                painter = painterResource(id =),
-                contentDescription = "more",
-            )
+            if (fineDustStatus != null) {
+                Image(
+                    modifier = Modifier.weight(1f),
+                    painter = fineDustStatus.painterRes,
+                    contentDescription = "more",
+                )
+            } else {
+                val composition by rememberLottieComposition(
+                    spec = LottieCompositionSpec.RawRes(resId = R.raw.animation_loading),
+                )
+
+                LottieAnimation(
+                    modifier = Modifier.weight(1f),
+                    composition = composition,
+                    iterations = LottieConstants.IterateForever,
+                    contentScale = ContentScale.FillWidth,
+                )
+            }
             Text(
                 text = fineDustStatus.text,
                 style = MaterialTheme.typography.titleMedium,
@@ -273,6 +286,16 @@ private fun FineDustCard(
         }
     }
 }
+
+private val FineDustStatus.painterRes: Painter
+    @Composable inline get() = painterResource(
+        id = when (this) {
+            FineDustStatus.VERY_BAD -> R.drawable.img_fine_dust_very_bad
+            FineDustStatus.BAD -> R.drawable.img_fine_dust_bad
+            FineDustStatus.NORMAL -> R.drawable.img_fine_dust_normal
+            FineDustStatus.GOOD -> R.drawable.img_fine_dust_good
+        },
+    )
 
 private val FineDustStatus?.text: String
     @Composable inline get() = stringResource(
