@@ -318,7 +318,9 @@ private fun HumidityCard(
             .bouncingClickable { },
         colors = cardColors,
     ) {
-        Box(modifier = Modifier.size(128.dp))
+        Box(modifier = Modifier
+            .padding(8.dp)
+            .size(80.dp))
     }
 }
 
