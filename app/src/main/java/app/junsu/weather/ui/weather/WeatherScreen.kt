@@ -32,6 +32,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.junsu.weather.R
+import app.junsu.weather.data.FineDustStatus
 import app.junsu.weather.data.UvStatus
 import app.junsu.weather.data.WeatherStatus
 import app.junsu.weather.ui.theme.BackgroundAfternoon
@@ -254,9 +255,35 @@ private fun FineDustCard(
             .bouncingClickable { },
         colors = cardColors,
     ) {
-        Box(modifier = Modifier.size(128.dp))
+        Column(
+            modifier = Modifier
+                .padding(8.dp)
+                .size(80.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Image(
+                painter = painterResource(id =),
+                contentDescription = "more",
+            )
+            Text(
+                text = fineDustStatus.text,
+                style = MaterialTheme.typography.titleMedium,
+            )
+        }
     }
 }
+
+private val FineDustStatus?.text: String
+    @Composable inline get() = stringResource(
+        id = when (this) {
+            FineDustStatus.VERY_BAD -> R.string.fine_dust_very_bad
+            FineDustStatus.BAD -> R.string.fine_dust_bad
+            FineDustStatus.NORMAL -> R.string.fine_dust_normal
+            FineDustStatus.GOOD -> R.string.fine_dust_good
+            null -> R.string.fine_dust_loading
+        },
+    )
 
 @Composable
 private fun HumidityCard(
