@@ -9,10 +9,10 @@ enum class FineDustStatus {
 
     companion object {
         fun fromString(value: String): FineDustStatus = when (value) {
-            "미세먼지 매우", "미세먼지 매우나쁨" -> VERY_BAD
-            "미세먼지 나쁨" -> BAD
-            "미세먼지 보통" -> NORMAL
-            "미세먼지 좋음" -> GOOD
+            "매우", "매우나쁨" -> VERY_BAD
+            "나쁨" -> BAD
+            "보통" -> NORMAL
+            "좋음" -> GOOD
             else -> NORMAL
         }
     }
