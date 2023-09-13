@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
@@ -36,6 +37,10 @@ import app.junsu.weather.R
 import app.junsu.weather.data.FineDustStatus
 import app.junsu.weather.data.UvStatus
 import app.junsu.weather.data.WeatherStatus
+import app.junsu.weather.data.datasource.network.crawler.SEARCHED_FINE_DUST_URL
+import app.junsu.weather.data.datasource.network.crawler.SEARCHED_HUMIDITY_URL
+import app.junsu.weather.data.datasource.network.crawler.SEARCHED_UV_URL
+import app.junsu.weather.data.datasource.network.crawler.SEARCHED_WEATHER_URL
 import app.junsu.weather.ui.theme.BackgroundAfternoon
 import app.junsu.weather.ui.theme.BackgroundDawn
 import app.junsu.weather.ui.theme.BackgroundMidday
@@ -59,6 +64,7 @@ fun WeatherScreen(
     weatherViewModel: WeatherViewModel = koinViewModel(),
 ) {
     val uiState by weatherViewModel.stateFlow.collectAsStateWithLifecycle()
+    val uriHandler = LocalUriHandler.current
 
     Column(
         modifier = modifier
@@ -86,11 +92,13 @@ fun WeatherScreen(
                 FineDustCard(
                     modifier = Modifier.padding(start = 8.dp),
                     fineDustStatus = uiState.weather?.fineDustStatus,
+                    onClick = { uriHandler.openUri(SEARCHED_FINE_DUST_URL) }
                 )
                 HumidityCard(
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp),
+                    onClick = { uriHandler.openUri(SEARCHED_HUMIDITY_URL) }
                 )
             }
             Row(
@@ -105,9 +113,11 @@ fun WeatherScreen(
                         .weight(1f)
                         .padding(start = 8.dp),
                     uvStatus = uiState.weather?.uvStatus,
+                    onClick = { uriHandler.openUri(SEARCHED_UV_URL) }
                 )
                 MoreInformationCard(
                     modifier = Modifier.padding(end = 8.dp),
+                    onClick = { uriHandler.openUri(SEARCHED_WEATHER_URL) },
                 )
             }
             HeadlineCard(
@@ -249,9 +259,10 @@ private val WeatherStatus?.text: String
 private fun FineDustCard(
     modifier: Modifier = Modifier,
     fineDustStatus: FineDustStatus?,
+    onClick: () -> Unit,
 ) {
     Card(
-        modifier = modifier.bouncingClickable { },
+        modifier = modifier.bouncingClickable(onClick = onClick),
         colors = cardColors,
     ) {
         Column(
@@ -311,16 +322,19 @@ private val FineDustStatus?.text: String
 @Composable
 private fun HumidityCard(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .bouncingClickable { },
+            .bouncingClickable(onClick = onClick),
         colors = cardColors,
     ) {
-        Box(modifier = Modifier
-            .padding(8.dp)
-            .size(80.dp))
+        Box(
+            modifier = Modifier
+                .padding(8.dp)
+                .size(80.dp),
+        )
     }
 }
 
@@ -328,11 +342,12 @@ private fun HumidityCard(
 private fun UvCard(
     modifier: Modifier = Modifier,
     uvStatus: UvStatus?,
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .bouncingClickable { },
+            .bouncingClickable(onClick = onClick),
         colors = cardColors,
     ) {
         Row(
@@ -391,9 +406,10 @@ private val UvStatus?.text: String
 @Composable
 private fun MoreInformationCard(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit,
 ) {
     Card(
-        modifier = modifier.bouncingClickable { },
+        modifier = modifier.bouncingClickable(onClick = onClick),
         colors = cardColors,
     ) {
         Box(
