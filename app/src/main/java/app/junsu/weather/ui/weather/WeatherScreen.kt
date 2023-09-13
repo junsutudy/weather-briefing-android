@@ -32,6 +32,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.junsu.weather.R
+import app.junsu.weather.data.UvStatus
 import app.junsu.weather.data.WeatherStatus
 import app.junsu.weather.ui.theme.BackgroundAfternoon
 import app.junsu.weather.ui.theme.BackgroundDawn
@@ -102,6 +103,7 @@ fun WeatherScreen(
                     modifier = Modifier
                         .weight(1f)
                         .padding(start = 8.dp),
+                    uvStatus = uiState.weather?.uvStatus,
                 )
                 MoreInformationCard(
                     modifier = Modifier.padding(end = 8.dp),
@@ -273,6 +275,7 @@ private fun HumidityCard(
 @Composable
 private fun UvCard(
     modifier: Modifier = Modifier,
+    uvStatus: UvStatus?,
 ) {
     Card(
         modifier = modifier
@@ -305,7 +308,7 @@ private fun UvCard(
                             top = 8.dp,
                         )
                         .fillMaxWidth(),
-                    text = "자외선",
+                    text = stringResource(id = R.string.uv),
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Text(
@@ -313,7 +316,7 @@ private fun UvCard(
                         start = 8.dp,
                         bottom = 8.dp,
                     ),
-                    text = "높음",
+                    text = uvStatus.text,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                 )
@@ -321,6 +324,17 @@ private fun UvCard(
         }
     }
 }
+
+private val UvStatus?.text: String
+    @Composable inline get() = stringResource(
+        id = when (this) {
+            UvStatus.VERY_HIGH -> R.string.uv_very_high
+            UvStatus.HIGH -> R.string.uv_high
+            UvStatus.NORMAL -> R.string.uv_normal
+            UvStatus.GOOD -> R.string.uv_good
+            null -> R.string.uv_loading
+        },
+    )
 
 @Composable
 private fun MoreInformationCard(
