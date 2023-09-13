@@ -40,6 +40,7 @@ import app.junsu.weather.ui.theme.BackgroundNight
 import app.junsu.weather.ui.theme.BackgroundSunrise
 import app.junsu.weather.ui.theme.BackgroundSunset
 import app.junsu.weather.util.TimePart
+import coil.compose.AsyncImage
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -57,46 +58,61 @@ fun WeatherScreen(
         modifier = modifier
             .fillMaxSize()
             .background(brush = currentGradientBackgroundBrush),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         WeatherBanner(
             modifier = Modifier.fillMaxWidth(),
             temperature = uiState.weather?.temperature,
             weatherStatus = uiState.weather?.weatherStatus,
         )
-        Row(
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            FineDustCard(
+            Row(
                 modifier = Modifier
-                    .weight(0.3f)
-                    .padding(start = 8.dp),
-            )
-            HumidityCard(
-                modifier = Modifier
-                    .weight(0.7f)
-                    .padding(end = 8.dp),
+                    .weight(
+                        weight = 1f,
+                        fill = false,
+                    )
+                    .padding(top = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                FineDustCard(
+                    modifier = Modifier
+                        .weight(0.3f)
+                        .padding(start = 8.dp),
+                )
+                HumidityCard(
+                    modifier = Modifier
+                        .weight(0.7f)
+                        .padding(end = 8.dp),
+                )
+            }
+            Row(
+                modifier = Modifier.weight(
+                    weight = 1f,
+                    fill = false,
+                ),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                UvCard(
+                    modifier = Modifier
+                        .weight(0.7f)
+                        .padding(start = 8.dp),
+                )
+                MoreInformationCard(
+                    modifier = Modifier
+                        .weight(0.3f)
+                        .padding(end = 8.dp),
+                )
+            }
+            HeadlineCard(
+                modifier = Modifier.weight(
+                    weight = 1f,
+                    fill = false,
+                ),
             )
         }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            UvCard(
-                modifier = Modifier
-                    .weight(0.7f)
-                    .padding(start = 8.dp),
-            )
-            MoreInformationCard(
-                modifier = Modifier
-                    .weight(0.3f)
-                    .padding(end = 8.dp),
-            )
-        }
-        HeadlineCard(
-            modifier = Modifier.fillMaxWidth(),
-        )
     }
 }
 
@@ -261,7 +277,13 @@ private fun UvCard(
             .clickable { },
         colors = cardColors,
     ) {
-        Box(modifier = Modifier.size(128.dp))
+        Row {
+            AsyncImage(
+                modifier = Modifier.size(80.dp),
+                model = R.drawable.img_uv,
+                contentDescription = "uv image",
+            )
+        }
     }
 }
 
