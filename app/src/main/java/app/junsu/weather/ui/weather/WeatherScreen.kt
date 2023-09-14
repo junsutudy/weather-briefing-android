@@ -524,7 +524,7 @@ private fun HeadlineNewsCard(
                         end = 8.dp,
                     ),
                     text = headlineNews.title,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.titleMedium,
                 )
             } else {
                 val composition by rememberLottieComposition(
