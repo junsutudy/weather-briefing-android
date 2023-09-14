@@ -27,4 +27,5 @@
     <string name="humidity_low">Low</string>
     <string name="humidity_very_low">Very Low</string>
     <string name="humidity_loading" translatable="false">…</string>
+    <string name="humidity">Humidity %s</string>
 </resources>
