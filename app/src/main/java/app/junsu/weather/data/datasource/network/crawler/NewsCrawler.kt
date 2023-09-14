@@ -20,8 +20,7 @@ class NewsCrawler(
     val headlineNews: Flow<HeadlineNews>
         get() = flow {
             val news = jsoupDoc.getElementsByClass("news_wrap api_ani_send")[0]
-            val thumbInformation =
-                news.getElementsByClass("dsc_thumb")[0]
+            val thumbInformation = news.getElementsByClass("dsc_thumb")[0]
             val thumbLink = thumbInformation.attr("href")
             val thumbnailImageUrl = thumbInformation.getElementsByTag("img")[0].attr("src")
             val title = news.getElementsByClass("news_tit")[0].text()
