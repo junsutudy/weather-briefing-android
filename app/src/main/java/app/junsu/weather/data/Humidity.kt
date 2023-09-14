@@ -3,12 +3,16 @@ package app.junsu.weather.data
 @JvmInline
 value class Humidity(
     val percentage: Float,
-) {/*
-    val status: Level
+) {
+    val level: Level
         get() = when (this.percentage) {
-            in 0.0 until 0.2 -> Level.VERY_LOW
-            in (0.2..0.4)
-        }*/
+            in 0.0..0.2 -> Level.VERY_LOW
+            in 0.2..0.4 -> Level.LOW
+            in 0.4..0.6 -> Level.NORMAL
+            in 0.6..0.8 -> Level.HIGH
+            in 0.8..1.0 -> Level.VERY_HIGH
+            else -> Level.NORMAL
+        }
 
     enum class Level {
         VERY_HIGH,
