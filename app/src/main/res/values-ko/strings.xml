@@ -16,4 +16,9 @@
     <string name="fine_dust_good">좋음</string>
     <string name="weather">날씨</string>
     <string name="fine_dust">미세먼지</string>
+    <string name="humidity_very_high">매우 높음</string>
+    <string name="humidity_high">높음</string>
+    <string name="humidity_normal">보통</string>
+    <string name="humidity_low">낮음</string>
+    <string name="humidity_very_low">매우 낮음</string>
 </resources>

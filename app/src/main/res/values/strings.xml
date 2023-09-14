@@ -21,4 +21,10 @@
     <string name="fine_dust_normal">Normal</string>
     <string name="fine_dust_good">Good</string>
     <string name="fine_dust_loading" translatable="false">…</string>
+    <string name="humidity_very_high">Very High</string>
+    <string name="humidity_high">High</string>
+    <string name="humidity_normal">Normal</string>
+    <string name="humidity_low">Low</string>
+    <string name="humidity_very_low">Very Low</string>
+    <string name="humidity_loading" translatable="false">…</string>
 </resources>
