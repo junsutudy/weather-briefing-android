@@ -349,6 +349,7 @@ private fun HumidityCard(
                 .padding(8.dp)
                 .height(80.dp)
                 .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
                 modifier = Modifier
@@ -361,6 +362,7 @@ private fun HumidityCard(
             )
             Column(
                 modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
             ) {
                 Text(
                     modifier = Modifier
@@ -380,7 +382,7 @@ private fun HumidityCard(
                         start = 8.dp,
                         bottom = 8.dp,
                     ),
-                    text = "TEXTTEXT",
+                    text = "늦은 저녁 비가 예상되어요.",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                 )
