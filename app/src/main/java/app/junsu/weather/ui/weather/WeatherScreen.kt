@@ -121,6 +121,11 @@ fun WeatherScreen(
                     fill = false,
                 ),
                 headlineNews = uiState.headlineNews,
+                onClick = {
+//                    if (uiState.headlineNews?.link != null) {
+//                        uriHandler.openUri(uiState.headlineNews!!.link)
+//                    }
+                }
             )
         }
     }
@@ -434,11 +439,13 @@ private fun getWeatherAnimationRaw(weatherStatus: WeatherStatus?): Int = when (w
 private fun HeadlineNewsCard(
     modifier: Modifier = Modifier,
     headlineNews: HeadlineNews?,
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = 8.dp)
+            .bouncingClickable(onClick = onClick),
         colors = cardColors,
     ) {
         Row(
@@ -458,7 +465,16 @@ private fun HeadlineNewsCard(
                     style = MaterialTheme.typography.bodyMedium,
                 )
             } else {
-                // TODO: loading
+                val composition by rememberLottieComposition(
+                    spec = LottieCompositionSpec.RawRes(resId = R.raw.animation_loading),
+                )
+
+                LottieAnimation(
+                    modifier = Modifier.size(80.dp),
+                    composition = composition,
+                    iterations = LottieConstants.IterateForever,
+                    contentScale = ContentScale.FillWidth,
+                )
             }
         }
     }
