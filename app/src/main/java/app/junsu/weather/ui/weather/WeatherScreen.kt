@@ -40,6 +40,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.junsu.weather.R
 import app.junsu.weather.data.FineDustStatus
 import app.junsu.weather.data.HeadlineNews
+import app.junsu.weather.data.Humidity
 import app.junsu.weather.data.UvStatus
 import app.junsu.weather.data.WeatherStatus
 import app.junsu.weather.data.datasource.network.crawler.SEARCHED_FINE_DUST_URL
@@ -103,6 +104,7 @@ fun WeatherScreen(
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 8.dp),
+                    humidity = uiState.weather?.humidity,
                     onClick = { uriHandler.openUri(SEARCHED_HUMIDITY_URL) },
                 )
             }
@@ -333,6 +335,7 @@ private val FineDustStatus?.text: String
 @Composable
 private fun HumidityCard(
     modifier: Modifier = Modifier,
+    humidity: Humidity?,
     onClick: () -> Unit,
 ) {
     Card(
@@ -356,9 +359,47 @@ private fun HumidityCard(
                     .width(4.dp)
                     .fillMaxHeight(),
             )
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            start = 8.dp,
+                            top = 8.dp,
+                        )
+                        .fillMaxWidth(),
+                    text = String.format(
+                        stringResource(id = R.string.humidity),
+                        humidity?.level.text,
+                    ),
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Text(
+                    modifier = Modifier.padding(
+                        start = 8.dp,
+                        bottom = 8.dp,
+                    ),
+                    text = "TEXTTEXT",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
         }
     }
 }
+
+private val Humidity.Level?.text: String
+    @Composable inline get() = stringResource(
+        id = when (this) {
+            Humidity.Level.VERY_HIGH -> R.string.humidity_very_high
+            Humidity.Level.HIGH -> R.string.humidity_high
+            Humidity.Level.NORMAL -> R.string.humidity_normal
+            Humidity.Level.LOW -> R.string.humidity_low
+            Humidity.Level.VERY_LOW -> R.string.humidity_very_low
+            null -> R.string.humidity_loading
+        },
+    )
 
 @Composable
 private fun UvCard(
