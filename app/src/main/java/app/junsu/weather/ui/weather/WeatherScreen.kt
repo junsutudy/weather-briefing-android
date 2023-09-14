@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
@@ -122,9 +123,9 @@ fun WeatherScreen(
                 ),
                 headlineNews = uiState.headlineNews,
                 onClick = {
-//                    if (uiState.headlineNews?.link != null) {
-//                        uriHandler.openUri(uiState.headlineNews!!.link)
-//                    }
+                    if (uiState.headlineNews?.link != null) {
+                        uriHandler.openUri(uiState.headlineNews!!.link)
+                    }
                 }
             )
         }
@@ -454,13 +455,15 @@ private fun HeadlineNewsCard(
         ) {
             if (headlineNews != null) {
                 Text(
-                    modifier = Modifier.padding(
-                        start = 8.dp,
-                        top = 8.dp,
-                        bottom = 8.dp,
-                        // todo remove
-                        end = 8.dp,
-                    ),
+                    modifier = Modifier
+                        .padding(
+                            start = 8.dp,
+                            top = 8.dp,
+                            bottom = 8.dp,
+                            // todo remove
+                            end = 8.dp,
+                        )
+                        .height(80.dp),
                     text = headlineNews.title,
                     style = MaterialTheme.typography.bodyMedium,
                 )
